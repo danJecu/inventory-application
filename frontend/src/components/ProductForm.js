@@ -7,6 +7,7 @@ const ProductForm = () => {
   const [title, setTitle] = useState('');
   const [quantity, setQuantity] = useState('');
   const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,9 +25,11 @@ const ProductForm = () => {
 
     if (!response.ok) {
       setError(json.error);
+      setEmptyFields(json.emptyFields);
     }
     if (response.ok) {
       setError(null);
+      setEmptyFields([]);
       setSku('');
       setTitle('');
       setQuantity('');
@@ -42,6 +45,7 @@ const ProductForm = () => {
         type="number"
         onChange={(e) => setSku(e.target.value)}
         value={sku}
+        className={emptyFields.includes('sku') ? 'error' : ''}
       />
 
       <label>Product Title</label>
@@ -49,6 +53,7 @@ const ProductForm = () => {
         type="text"
         onChange={(e) => setTitle(e.target.value)}
         value={title}
+        className={emptyFields.includes('title') ? 'error' : ''}
       />
 
       <label>Quantity (in kg)</label>
@@ -56,6 +61,7 @@ const ProductForm = () => {
         type="number"
         onChange={(e) => setQuantity(e.target.value)}
         value={quantity}
+        className={emptyFields.includes('quantity') ? 'error' : ''}
       />
       <button>Add Product</button>
       {error && <div className="error">{error}</div>}

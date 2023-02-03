@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useInventoryContext } from '../hooks/useInventoryContext';
 
 // components
@@ -19,7 +19,7 @@ const Home = () => {
     };
 
     fetchInventory();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="home">

@@ -25,6 +25,23 @@ const getProduct = async (req, res) => {
 const createProduct = async (req, res) => {
   const { sku, title, quantity } = req.body;
 
+  let emptyFields = [];
+
+  if (!sku) {
+    emptyFields.push('sku');
+  }
+  if (!title) {
+    emptyFields.push('title');
+  }
+  if (!quantity) {
+    emptyFields.push('quantity');
+  }
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: 'Please fill in all the fields', emptyFields });
+  }
+
   // add product to db
   try {
     const product = await Product.create({ sku, title, quantity });

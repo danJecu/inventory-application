@@ -12,6 +12,10 @@ export const inventoryReducer = (state, action) => {
       return {
         inventory: [action.payload, ...state.inventory],
       };
+    case 'DELETE_PRODUCT':
+      return {
+        inventory: state.inventory.filter((p) => p._id !== action.payload._id),
+      };
     default:
       return state;
   }
